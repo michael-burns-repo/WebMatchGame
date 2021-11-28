@@ -52,8 +52,11 @@ for (let j = 0; j < cardCount; j++) {
 }
 
 const cards = document.querySelectorAll('.js-card');
+const cardIcons = document.querySelectorAll('.js-card i');
 let activeCard = null;
 let target, classes, isFlipped;
+cards.forEach(c => c.addEventListener('click', (e) => ClickOnCard(e.target)));
+/*
 cards.forEach(c => c.addEventListener('click', (e) => {
     target = e.target;
     classes = target.classList.value.split(' ');
@@ -76,6 +79,54 @@ cards.forEach(c => c.addEventListener('click', (e) => {
         }
     }
 }));
+*/
+cardIcons.forEach(i => i.addEventListener('click', (e) => ClickOnCard(e.target.parentElement)));
+/*
+cardIcons.forEach(i => i.addEventListener('click', (e) => {
+    target = e.target.parentElement;
+    classes = target.classList.value.split(' ');
+    isFlipped = classes.indexOf(revealClassName) > -1 ? true : false;
+    if (isFlipped) {
+        FlipCard(target, 'conceal');
+    } else {
+        if (activeCard === null) {
+            activeCard = target;
+            FlipCard(target, 'reveal');
+        } else {
+            FlipCard(target, 'reveal');
+            if (activeCard.dataset.icon === target.dataset.icon) {
+                target.classList.remove('js-card');
+                activeCard.classList.remove('js-card');
+            } else {
+                MatchNotFound(target, activeCard);
+            }
+            activeCard = null;
+        }
+    }
+}));
+*/
+
+function ClickOnCard(target){
+    classes = target.classList.value.split(' ');
+    isFlipped = classes.indexOf(revealClassName) > -1 ? true : false;
+    if (isFlipped) {
+        FlipCard(target, 'conceal');
+    } else {
+        if (activeCard === null) {
+            activeCard = target;
+            FlipCard(target, 'reveal');
+        } else {
+            FlipCard(target, 'reveal');
+            if (activeCard.dataset.icon === target.dataset.icon) {
+                target.classList.remove('js-card');
+                activeCard.classList.remove('js-card');
+            } else {
+                MatchNotFound(target, activeCard);
+            }
+            activeCard = null;
+        }
+    }
+}
 
 function RoundToEven(num) {
     let evenNumber;
@@ -125,6 +176,7 @@ function DelayFlip(card1, card2) {
 
 function FlipCard(card, flipType) {
     if (flipType === 'reveal') {
+	card.classList.remove('conceal-card');
         card.classList.add(revealClassName);
     } else {
         card.classList.remove(revealClassName);
