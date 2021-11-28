@@ -1,0 +1,104 @@
+:root{
+    --blue: #0000ff;
+    --green: #ccffcc;
+    --red: #ff0000;
+    --white: #fff;
+}
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+.game-board {
+    display: grid;
+}
+.card-wrapper {
+    position: relative;
+}
+.card, .card > i {
+    left: 50%;
+    position: absolute;
+    top: 50%;
+    transform: translate(-50%, -50%);
+}
+.card {
+    background-color: var(--green);
+    border: 1px solid #ddd;
+    border-radius: 1rem;
+    font-size: 5rem;
+    height: 80%;
+    width: 80%;
+}
+.card i {
+    visibility: hidden;
+}
+.conceal-card {
+    animation: 1.2s forwards concealCard;
+}
+.reveal-card {
+    animation: 1.2s forwards revealCard;
+}
+.card.reveal-card i {
+    animation: 1.2s forwards revealIcon;
+}
+.card.conceal-card i {
+    animation: 1.2s forwards concealIcon;
+}
+@keyframes concealCard {
+    0% {
+        transform: translate(-50%, -50%) rotateY(0);
+        background-color: var(--white);
+    }
+    50% {
+        transform: translate(-50%, -50%) rotateY(90deg);
+        background-color: var(--white);
+    }
+    100% {
+        transform: translate(-50%, -50%) rotateY(0);
+        background-color: var(--green);
+    }
+}
+@keyframes revealCard {
+    0% {
+        transform: translate(-50%, -50%) rotateY(0);
+        background-color: var(--green);
+    }
+    50% {
+        transform: translate(-50%, -50%) rotateY(90deg);
+        background-color: var(--green);
+    }
+    100% {
+        transform: translate(-50%, -50%) rotateY(0);
+        background-color: var(--white);
+    }
+}
+@keyframes revealIcon {
+    0% {
+        visibility: hidden;
+    }
+    51% {
+        visibility: hidden;
+    }
+    100% {
+        visibility: visible;
+    }
+}
+@keyframes concealIcon {
+    0% {
+        visibility: visible;
+    }
+    51% {
+        visibility: hidden;
+    }
+    100% {
+        visibility: hidden;
+    }
+}
+@media (max-width: 426px) {
+    .game-board {
+        grid-template-columns: repeat(3, 1fr);
+    }
+    .card-wrapper {
+        height: 25vh;
+    }
+}
